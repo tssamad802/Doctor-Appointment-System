@@ -7,14 +7,9 @@ require_once 'includes/control.php';
 $db = new database();
 $conn = $db->connection();
 $controller = new controller($conn);
-$auth = new auth(['doctor_login_id']);
-$doctor_id = $auth->getId();
-// echo '<pre>';
-// print_r($auth->getId());
-// echo '</pre>';  
-// exit;
+$auth = new auth(roles: ['admin_id']);
 $join = "
-INNER JOIN appointments a ON a.doctor_id = doctor.id 
+INNER JOIN appointments a ON a.doctor_id = doctor.id
 INNER JOIN patient p ON p.id = a.patient_id
 ";
 
@@ -24,14 +19,13 @@ $data = $controller->fetch_records(
     'doctor.id',
     'doctor.name',
     'p.id AS patient_id',
-    'a.id AS appointment_id',
     'p.name AS patient_name',
     'a.date',
     'a.time',
     'a.status'
   ],
   $join,
-  ['doctor.id' => $doctor_id]
+  ['a.status' => 'pending']
 );
 
 
@@ -45,7 +39,7 @@ $data = $controller->fetch_records(
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doctor Appointments</title>
+  <title>Manage Appointments</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -61,13 +55,13 @@ $data = $controller->fetch_records(
     </div>
   </nav>
   <div class="container py-5">
-    <h2 class="mb-4 text-center">My Appointments</h2>
+    <h2 class="mb-4 text-center">All Appointments</h2>
     <table class="table table-bordered text-center">
       <thead class="table-dark">
         <tr>
+          <th>Doctor</th>
           <th>Patient</th>
           <th>Date</th>
-          <th>Time</th>
           <th>Status</th>
           <th>Action</th>
         </tr>
@@ -76,31 +70,22 @@ $data = $controller->fetch_records(
         <?php
         foreach ($data as $row) { ?>
           <tr>
+            <td><?php echo $row['name']; ?></td>
             <td><?php echo $row['patient_name']; ?></td>
             <td><?php echo $row['date']; ?></td>
-            <td><?php echo $row['time']; ?></td>
             <td><span class="badge bg-warning text-dark"><?php echo $row['status']; ?></span></td>
             <td>
-              <?php if ($row['status'] != 'approved') { ?>
+              <?php if ($row['status'] != 'aproved') { ?>
 
-                <!-- Approve Button -->
-                <a href="./doctor-approved?id=<?php echo $row['appointment_id']; ?>" class="btn btn-success btn-sm">
-                  Approve
-                </a>
-
-                <!-- Cancel Button -->
-                <a href="./doctor-apointment-cancel?id=<?php echo $row['appointment_id']; ?>" class="btn btn-danger btn-sm">
-                  Cancel
+                <a href="./admin-aproved?id=<?php echo $row['id']; ?>">
+                  <button class="btn btn-success btn-sm">Approve</button>
                 </a>
 
               <?php } else { ?>
 
-                <!-- Only Cancel if already approved -->
-                <a href="./doctor-apointment-cancel?id=<?php echo $row['appointment_id']; ?>" class="btn btn-danger btn-sm">
-                  Cancel
-                </a>
-
+                <a href="./admin-cancel?id=<?php echo $row['id']; ?>"><button class="btn btn-danger btn-sm">Cancel</button></a>
               <?php } ?>
+
             </td>
           </tr>
         <?php } ?>

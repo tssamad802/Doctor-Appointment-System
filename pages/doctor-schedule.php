@@ -98,7 +98,7 @@ $data = $controller->fetch_records('schedule', ['*'], [], ['doctor_id' => $docto
               <td><?php echo $row['end_time'] ?></td>
               <td>
                 <?php echo $row['slot'] ?>
-              </td>=
+              </td>
             </tr>
           <?php } ?>
         </tbody>

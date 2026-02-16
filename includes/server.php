@@ -14,7 +14,10 @@ $doctor_id = $_POST['doctor_id'];
 $day = date("l", strtotime($date));
 
 $result = $controller->check_record('schedule', ['day' => $day, 'doctor_id' => $doctor_id]);
-
+$current_date = date('Y-m-d');
+// exit;
+// print_r($result);
+// exit;
 if ($result) {
     // echo "doctor are availabe on this day" . $day;
     $start = strtotime($result[0]['start_time']);

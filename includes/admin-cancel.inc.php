@@ -8,7 +8,7 @@ $db = new database();
 $conn = $db->connection();
 $controller = new controller($conn);
 $id = $_GET['id'];
-$controller->delete('appointments',  'doctor_id', $id);
+$controller->delete('appointments',  'id', $id);
 // echo '<pre>';
 // print_r($test);
 // echo '</pre>';

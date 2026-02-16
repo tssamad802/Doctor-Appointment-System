@@ -8,7 +8,7 @@ $db = new database();
 $conn = $db->connection();
 $controller = new controller($conn);
 $id = $_GET['id'];
-$controller->update('appointments',  ['status' => 'aproved'], 'doctor_id', $id);
+$controller->update('appointments',  ['status' => 'aproved'], 'id', $id);
 // echo '<pre>';
 // print_r($test);
 // echo '</pre>';

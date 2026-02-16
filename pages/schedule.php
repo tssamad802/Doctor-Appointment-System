@@ -17,13 +17,13 @@ $doctor_id = $_GET['id'];
       <h2 class="mb-4 text-center">Select Appointment Slot</h2>
       <div class="mb-4">
         <label for="date" class="form-label">Select Date:</label>
-        <input type="date" id="date" class="form-control w-25">
+        <input type="date" id="date" class="form-control w-25" min="<?php echo date("Y-m-d"); ?>">
       </div>
 
       <h5>Available Slots:</h5>
       <div class="d-flex flex-wrap gap-2" id="slots">
-        <p id="error"></p>
       </div>
+      <p id="error"></p>
 
       <a href="./book" class="btn btn-primary mt-3">Book Selected Slot</a>
     </div>
@@ -43,10 +43,11 @@ $doctor_id = $_GET['id'];
           type: 'POST',
           data: { date: date, doctor_id: doctor_id },
           success: function (response) {
-            let slots = $.parseJSON(response);
+            //console.log(response);
 
+            let slots = $.parseJSON(response);
             let container = $('#slots');
-            container.html('');  
+            container.html('');
             $('#error').text('');
             if ($.isEmptyObject(slots)) {
               $('#error').text('Doctor is not available on this date');
@@ -81,6 +82,25 @@ $doctor_id = $_GET['id'];
           //console.log(typeof selectedSlot);
 
         }
+      });
+      $(function () {
+        var dtToday = new Date();
+
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if (month < 10)
+          month = '0' + month.toString();
+        if (day < 10)
+          day = '0' + day.toString();
+
+        var maxDate = year + '-' + month + '-' + day;
+
+        // or instead:
+        // var maxDate = dtToday.toISOString().substr(0, 10);
+
+        // alert(maxDate);
+        $('#date').attr('min', maxDate);
       });
     });
   </script>

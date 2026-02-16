@@ -19,8 +19,10 @@ $data = $controller->fetch_records(
     'doctor.id',
     'doctor.name',
     'p.id AS patient_id',
+    'a.id AS appointment_id',
     'p.name AS patient_name',
     'a.date',
+    'a.time',
     'a.status'
   ],
   $join
@@ -75,13 +77,17 @@ $data = $controller->fetch_records(
             <td>
               <?php if ($row['status'] != 'aproved') { ?>
 
-                <a href="./admin-approved?id=<?php echo $row['id']; ?>">
+                <a href="./admin-aproved?id=<?php echo $row['appointment_id']; ?>">
                   <button class="btn btn-success btn-sm">Approve</button>
+                </a>
+                <a href="./admin-cancel?id=<?php echo $row['appointment_id']; ?>">
+                  <button class="btn btn-secondary btn-sm">Cancel</button>
                 </a>
 
               <?php } else { ?>
 
-                <a href="./admin-cancel?id=<?php echo $row['id']; ?>"><button class="btn btn-danger btn-sm">Cancel</button></a>
+                <a href="./admin-cancel?id=<?php echo $row['appointment_id']; ?>"><button
+                    class="btn btn-danger btn-sm">Cancel</button></a>
               <?php } ?>
 
             </td>

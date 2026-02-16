@@ -45,7 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $insert_appointment = [
         'doctor_id' => $doctor_id,
         'patient_id' => $insert_patient,
-        'date' => $patient_date
+        'date' => $patient_date,
+        'time' => $patient_slot
     ];
     $insert_appointment = $controller->insert_record('appointments', $insert_appointment);
     header('Location: ./appointments');
