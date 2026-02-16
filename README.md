@@ -1,4 +1,4 @@
-# 🏥 Doctor Appointment System
+# Doctor Appointment System
 
 A simple and responsive Doctor Appointment Booking System built with **PHP, MySQL, Bootstrap, and JavaScript**.
 
@@ -19,16 +19,12 @@ A simple and responsive Doctor Appointment Booking System built with **PHP, MySQ
 * JavaScript & AJAX
 * HTML5 & CSS3
 
-## 📸 Screenshots
-
-(Add screenshots here)
-
 ## ⚙ Installation
 
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/project-name.git
+https://github.com/yourusername/project-name.git
 ```
 
 ### 2️⃣ Move to XAMPP htdocs
@@ -58,14 +54,6 @@ $host = "localhost";
 $user = "root";
 $pass = "";
 $db   = "doctor-appointment";
-```
-
-### 5️⃣ Run Project
-
-Open browser:
-
-```
-http://localhost/project-name
 ```
 
 ## 📂 Project Workflow
